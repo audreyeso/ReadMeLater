@@ -1,4 +1,4 @@
-package com.test.readmelater;
+package com.test.readmelater.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +14,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.google.zxing.client.android.CaptureActivity;
+import com.test.readmelater.R;
 import com.test.readmelater.googleApiModels.Example;
+import com.test.readmelater.interfaces.GoogleBooksAPI;
+import com.test.readmelater.models.Book;
 
 import java.util.ArrayList;
 

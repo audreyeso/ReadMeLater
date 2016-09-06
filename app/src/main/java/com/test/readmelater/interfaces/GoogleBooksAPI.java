@@ -1,4 +1,4 @@
-package com.test.readmelater;
+package com.test.readmelater.interfaces;
 
 import com.test.readmelater.googleApiModels.Example;
 

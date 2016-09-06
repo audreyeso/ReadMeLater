@@ -1,4 +1,4 @@
-package com.test.readmelater;
+package com.test.readmelater.models;
 
 import org.parceler.Parcel;
 
