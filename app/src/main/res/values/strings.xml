@@ -4,4 +4,5 @@
     <string name="read_me_later">Read Me Later</string>
     <string name="no_wifi_connection">No WIFI connection</string>
     <string name="scan_new_book">Scan a new book.</string>
+    <string name="no_wifi">No WIFI</string>
 </resources>

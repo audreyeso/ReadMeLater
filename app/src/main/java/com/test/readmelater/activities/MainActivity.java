@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.google.zxing.client.android.CaptureActivity;
+import com.test.readmelater.OpenHelper;
 import com.test.readmelater.R;
 import com.test.readmelater.googleApiModels.Example;
 import com.test.readmelater.interfaces.GoogleBooksAPI;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private String contents, title, author, full, imageUrl;
     private ArrayList<Book> bookArrayList;
     private Book book;
+    private OpenHelper openHelperDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        openHelperDb = OpenHelper.getCurrentInstance(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -124,6 +129,43 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 0) {
+            if (resultCode == RESULT_OK) {
+                contents = data.getStringExtra(SCAN_RESULT);
+                DatabaseAsyncTask dbTask = new DatabaseAsyncTask();
+                dbTask.execute();
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);// change this to splash screen
+                startActivity(intent);
+
+            } else if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(this, R.string.no_wifi, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private class DatabaseAsyncTask extends AsyncTask<Void, Integer, Void> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            getBookDescription();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void value) {
+            super.onPostExecute(value);
+            //progressBar.setVisibility(View.INVISIBLE);
+        }
+    }
+
     public void setUpBooks() {
 
         if (title == null) {
@@ -136,6 +178,7 @@ public class MainActivity extends AppCompatActivity {
             book.setIsbn(contents);
             book.setBookImage(imageUrl);
             bookArrayList.add(book);
+            openHelperDb.addBook(book);
             //student.setBookArrayList(bookArrayList);
             //db.addBook(book);
             //customCursorAdapterBooks.swapCursor(db.getBooks(idStudent));
