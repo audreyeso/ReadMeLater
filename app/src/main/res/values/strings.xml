@@ -2,4 +2,6 @@
     <string name="app_name">ReadMeLater</string>
     <string name="action_settings">Settings</string>
     <string name="read_me_later">Read Me Later</string>
+    <string name="no_wifi_connection">No WIFI connection</string>
+    <string name="scan_new_book">Scan a new book.</string>
 </resources>
