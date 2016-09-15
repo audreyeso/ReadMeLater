@@ -2,6 +2,7 @@ package com.test.readmelater.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -9,12 +10,16 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.zxing.client.android.CaptureActivity;
+import com.test.readmelater.CustomCursorAdapterBooks;
 import com.test.readmelater.OpenHelper;
 import com.test.readmelater.R;
 import com.test.readmelater.googleApiModels.Example;
@@ -40,6 +45,14 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Book> bookArrayList;
     private Book book;
     private OpenHelper openHelperDb;
+    private Cursor cursor;
+    private CustomCursorAdapterBooks customCursorAdapterBooks;
+    private ProgressBar progressBar;
+    private long idBook;
+    private ListView bookResultsListView;
+//    private RecyclerView recyclerView;
+//    private RecyclerView.Adapter rvAdapter;
+//    private RecyclerView.LayoutManager rvLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +60,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        setTitle("");
+        //cursor = openHelperDb.getBooks();
+        bookResultsListView = (ListView) findViewById(R.id.main_activity_result_book_listview);
+
+        customCursorAdapterBooks = new CustomCursorAdapterBooks(this, cursor);
+        bookResultsListView.setAdapter(customCursorAdapterBooks);
+
+
+
+
+        //recyclerView = (RecyclerView) findViewById(R.id.main_activity_recycler_view_books);
+
+        bookArrayList = new ArrayList<>();
+
 
         openHelperDb = OpenHelper.getCurrentInstance(this);
 
@@ -172,16 +200,30 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, R.string.scan_new_book, Toast.LENGTH_LONG).show();
 
         } else {
-            book = new Book(title, author, imageUrl);
+            book = new Book(title, author, imageUrl, idBook);
             book.setTitle(title);
             book.setAuthor(author);
             book.setIsbn(contents);
             book.setBookImage(imageUrl);
+            book.setId(idBook);
             bookArrayList.add(book);
             openHelperDb.addBook(book);
+
+
+            Log.d("Response", "title" + book.getTitle());
+            Log.d("Response","author" +book.getAuthor());
+
+            Toast.makeText(this,book.getTitle(), Toast.LENGTH_LONG).show();
+//
+//            rvLayoutManager = new LinearLayoutManager(this);
+//            recyclerView.setLayoutManager(rvLayoutManager);
+//            rvAdapter = new CustomRecyclerViewAdapter(bookArrayList);
+//            recyclerView.setAdapter(rvAdapter);
             //student.setBookArrayList(bookArrayList);
             //db.addBook(book);
-            //customCursorAdapterBooks.swapCursor(db.getBooks(idStudent));
+
+            book.setBookArrayList(bookArrayList);
+            customCursorAdapterBooks.swapCursor(openHelperDb.getBooks());
         }
     }
 

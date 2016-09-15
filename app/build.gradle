@@ -41,4 +41,5 @@ dependencies {
     apt 'org.parceler:parceler:1.1.1'
     compile 'com.google.code.gson:gson:2.7'
     compile 'im.dacer:AndroidCharts:1.0.1'
+    compile 'com.android.support:recyclerview-v7:24.1.1'
 }

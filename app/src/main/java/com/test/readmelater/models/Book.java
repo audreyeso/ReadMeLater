@@ -15,16 +15,18 @@ public class Book {
     String author;
     String isbn;
     String bookImage;
+    long id;
     ArrayList<Book> bookArrayList;
 
     public Book() {
 
     }
 
-    public Book(String title, String author, String bookImage) {
+    public Book(String title, String author, String bookImage, long id) {
         this.title = title;
         this.author = author;
         this.bookImage = bookImage;
+        this.id = id;
     }
 
     public String getTitle() {
@@ -65,5 +67,13 @@ public class Book {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

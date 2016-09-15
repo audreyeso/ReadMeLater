@@ -66,12 +66,13 @@ public class OpenHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public Cursor getBooks(long id) {
+    public Cursor getBooks() {
         SQLiteDatabase database = getReadableDatabase();
         Cursor cursor = database.query(OpenHelper.BOOK_TABLE_NAME,
                 null,
                 OpenHelper.COL_ID + " = ?",
-                new String[]{id + ""},
+                new String [] {},
+                 // new String[]{id + ""},
                 null, null, null);
         cursor.moveToFirst();
         return cursor;

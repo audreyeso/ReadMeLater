@@ -13,6 +13,7 @@
     tools:showIn="@layout/activity_main">
 
     <TextView
+        android:id="@+id/main_activity_read_me_later_textview"
         android:textColor="@color/colorPrimaryDark"
         android:textAllCaps="true"
         android:textSize="20dp"
@@ -20,4 +21,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/read_me_later" />
+
+    <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:layout_below="@id/main_activity_read_me_later_textview"-->
+        <!--android:id="@+id/main_activity_recycler_view_books"-->
+        <!--android:scrollbars="vertical"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"/>-->
+
 </RelativeLayout>
