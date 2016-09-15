@@ -63,7 +63,6 @@ public class CustomCursorAdapterBooks extends CursorAdapter {
                 OpenHelper openHelper = OpenHelper.getCurrentInstance(context);
                 openHelper.removeBooks(id);
                 swapCursor(openHelper.getBooks());
-                //swapCursor(openHelper.getBooks(Long.parseLong(bookId)));
             }
         });
 

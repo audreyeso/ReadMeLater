@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.zxing.client.android.CaptureActivity;
@@ -45,40 +44,33 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Book> bookArrayList;
     private Book book;
     private OpenHelper openHelperDb;
-    private Cursor cursor;
     private CustomCursorAdapterBooks customCursorAdapterBooks;
-    private ProgressBar progressBar;
+    //private ProgressBar progressBar;
     private long idBook;
     private ListView bookResultsListView;
-//    private RecyclerView recyclerView;
-//    private RecyclerView.Adapter rvAdapter;
-//    private RecyclerView.LayoutManager rvLayoutManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        bookResultsListView = (ListView) findViewById(R.id.main_activity_result_book_listview);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         setTitle("");
-        //cursor = openHelperDb.getBooks();
-        bookResultsListView = (ListView) findViewById(R.id.main_activity_result_book_listview);
+        openHelperDb = OpenHelper.getCurrentInstance(this);
 
+        Cursor cursor = openHelperDb.getBooks();
         customCursorAdapterBooks = new CustomCursorAdapterBooks(this, cursor);
         bookResultsListView.setAdapter(customCursorAdapterBooks);
 
 
-
-
-        //recyclerView = (RecyclerView) findViewById(R.id.main_activity_recycler_view_books);
-
         bookArrayList = new ArrayList<>();
 
 
-        openHelperDb = OpenHelper.getCurrentInstance(this);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -204,26 +196,21 @@ public class MainActivity extends AppCompatActivity {
             book.setTitle(title);
             book.setAuthor(author);
             book.setIsbn(contents);
-            book.setBookImage(imageUrl);
             book.setId(idBook);
+            book.setBookImage(imageUrl);
             bookArrayList.add(book);
-            openHelperDb.addBook(book);
 
 
             Log.d("Response", "title" + book.getTitle());
             Log.d("Response","author" +book.getAuthor());
 
-            Toast.makeText(this,book.getTitle(), Toast.LENGTH_LONG).show();
-//
-//            rvLayoutManager = new LinearLayoutManager(this);
-//            recyclerView.setLayoutManager(rvLayoutManager);
-//            rvAdapter = new CustomRecyclerViewAdapter(bookArrayList);
-//            recyclerView.setAdapter(rvAdapter);
-            //student.setBookArrayList(bookArrayList);
-            //db.addBook(book);
 
             book.setBookArrayList(bookArrayList);
+            openHelperDb.addBook(book);
             customCursorAdapterBooks.swapCursor(openHelperDb.getBooks());
+
+            Toast.makeText(this,book.getTitle() + " added.", Toast.LENGTH_LONG).show();
+
         }
     }
 

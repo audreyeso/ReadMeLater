@@ -17,6 +17,7 @@ public class OpenHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "BOOK_DB";
     public static OpenHelper currentInstance;
+
     public static final String BOOK_TABLE_NAME= "BOOK";
     public static final String COL_ID= "_id";
     public static final String COL_BOOK_TITLE= "TITLE";
@@ -68,14 +69,17 @@ public class OpenHelper extends SQLiteOpenHelper {
 
     public Cursor getBooks() {
         SQLiteDatabase database = getReadableDatabase();
-        Cursor cursor = database.query(OpenHelper.BOOK_TABLE_NAME,
-                null,
-                OpenHelper.COL_ID + " = ?",
-                new String [] {},
-                 // new String[]{id + ""},
-                null, null, null);
-        cursor.moveToFirst();
+
+        Cursor cursor = database.query(BOOK_TABLE_NAME, BOOK_COLUMNS, null, null, null, null, null);
         return cursor;
+//        Cursor cursor = database.query(OpenHelper.BOOK_TABLE_NAME,
+//                null,
+//                OpenHelper.COL_ID + " = ?",
+//                new String [] {},
+//                 // new String[]{id + ""},
+//                null, null, null);
+//        cursor.moveToFirst();
+//        return cursor;
     }
 
     public void removeBooks(int id) {
