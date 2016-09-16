@@ -23,9 +23,10 @@
         android:text="@string/read_me_later" />
 
     <ListView
+        android:layout_below="@id/main_activity_read_me_later_textview"
         android:id="@+id/main_activity_result_book_listview"
         android:layout_width="match_parent"
-        android:layout_height="245dp"
+        android:layout_height="match_parent"
         android:fontFamily="sans-serif-condensed" />
 
 </RelativeLayout>

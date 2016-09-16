@@ -61,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         setTitle("");
+
+        bookArrayList = new ArrayList<>();
         openHelperDb = OpenHelper.getCurrentInstance(this);
 
         Cursor cursor = openHelperDb.getBooks();
@@ -68,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
         bookResultsListView.setAdapter(customCursorAdapterBooks);
 
 
-        bookArrayList = new ArrayList<>();
 
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -132,9 +133,9 @@ public class MainActivity extends AppCompatActivity {
 
                     } catch (Exception e) {
                         e.printStackTrace();
-                        if (imageUrl == null) {
-                            imageUrl = "http://images.clipartpanda.com/booklet-clipart-open-book-vector-icon_small.jpg";
-                        }
+//                        if (imageUrl == null) {
+//                            imageUrl = "http://images.clipartpanda.com/booklet-clipart-open-book-vector-icon_small.jpg";
+//                        }
                     }
                 }
 
@@ -157,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                 contents = data.getStringExtra(SCAN_RESULT);
                 DatabaseAsyncTask dbTask = new DatabaseAsyncTask();
                 dbTask.execute();
-                Intent intent = new Intent(MainActivity.this, MainActivity.class);// change this to splash screen
+                Intent intent = new Intent(MainActivity.this, SplashScreenActivity.class);// change this to splash screen
                 startActivity(intent);
 
             } else if (resultCode == RESULT_CANCELED) {

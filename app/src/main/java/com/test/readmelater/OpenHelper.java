@@ -62,6 +62,7 @@ public class OpenHelper extends SQLiteOpenHelper {
         contentValues.put(COL_BOOK_TITLE, book.getTitle());
         contentValues.put(COL_BOOK_AUTHOR, book.getAuthor());
         contentValues.put(COL_BOOK_IMAGE, book.getBookImage());
+        contentValues.put(COL_ID, book.getId());
         SQLiteDatabase db = getWritableDatabase();
         db.insert(BOOK_TABLE_NAME,null,contentValues);
         db.close();
